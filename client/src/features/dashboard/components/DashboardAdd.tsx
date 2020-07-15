@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { Field, Form } from 'react-final-form';
-import { Button, TextField } from '@material-ui/core';
+import { Box, Button, TextField } from '@material-ui/core';
 import { useClickAway } from 'react-use';
 import { useDashboardAdd } from 'features/dashboard/hooks';
+import { Alert } from '@material-ui/lab';
 import {
   DashboardAddForm,
   DashboardAddFormFooter,
@@ -14,7 +15,7 @@ type APIDashboardFormData = {
 };
 
 const DashboardAdd = () => {
-  const [add] = useDashboardAdd();
+  const [add, { error }] = useDashboardAdd();
   const [edit, setEdit] = useState(false);
   const refContainer = useRef<HTMLDivElement>(null);
 
@@ -53,6 +54,12 @@ const DashboardAdd = () => {
                   />
                 )}
               </Field>
+
+              {error && (
+                <Box mt={2}>
+                  <Alert severity="error">{error.message}</Alert>
+                </Box>
+              )}
 
               <DashboardAddFormFooter>
                 <Button

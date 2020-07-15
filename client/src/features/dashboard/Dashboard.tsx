@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useApolloClient } from '@apollo/react-hooks';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { Snackbar, SnackbarCloseReason } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { useColumnPatch } from 'features/column';
 import { useIssuesPatch } from 'features/issue';
 import { DashboardDnDTypes } from './constants';
@@ -13,9 +15,27 @@ import { moveIssuesBetweenColumns, moveIssuesInColumn, move } from './utils';
 export const Dashboard = () => {
   const { dashboardId } = useParams<DashboardParams>();
   const client = useApolloClient();
+  const [error, setError] = useState<Error | undefined>();
 
-  const [issuePatch] = useIssuesPatch();
-  const [columnPatch] = useColumnPatch();
+  const [issuePatch, { error: issuePatchError }] = useIssuesPatch();
+  const [columnPatch, { error: columnPatchError }] = useColumnPatch();
+
+  useEffect(
+    () => {
+      if (issuePatchError || columnPatchError) {
+        setError(issuePatchError || columnPatchError);
+      }
+    },
+    [columnPatchError, issuePatchError],
+  );
+
+  const handleCloseError = (_, reason?: SnackbarCloseReason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setError(undefined);
+  };
 
   const handleDragEnd = (result: DropResult) => {
     const data = client.readQuery<DashboardQueryResponse>({
@@ -85,6 +105,20 @@ export const Dashboard = () => {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
+      <Snackbar
+        open={Boolean(error)}
+        autoHideDuration={6000}
+        onClose={handleCloseError}
+      >
+        <Alert
+          variant="filled"
+          severity="error"
+          onClose={handleCloseError}
+        >
+          {error?.message}
+        </Alert>
+      </Snackbar>
+
       <Droppable
         droppableId="board"
         type={DashboardDnDTypes.column}

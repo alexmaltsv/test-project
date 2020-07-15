@@ -1,5 +1,5 @@
 import { Dashboard } from "./dashboard.model";
-import { APIDashboard, APIDashboardInput } from "../../graphql";
+import { APIDashboardInput } from "../../graphql";
 
 class DashboardRepository {
   get = async (id: string) => {

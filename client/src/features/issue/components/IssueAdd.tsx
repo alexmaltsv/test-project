@@ -1,10 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { useClickAway } from 'react-use';
 import { Field, Form } from 'react-final-form';
-import { Button } from '@material-ui/core';
+import { Box, Button, TextField } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { useDashboardParams } from 'features/dashboard';
 import { useIssueAdd } from '../hooks';
 import IssueContainer from './IssueContainer';
+import { IssueAddFooter, IssueAddForm } from './IssueAdd.styled';
 
 type IssueAddProps = {
   columnId: string;
@@ -20,7 +22,7 @@ const IssueAdd = ({ columnId }: IssueAddProps) => {
   const [edit, setEdit] = useState(false);
   const refContainer = useRef<any>();
   const { dashboardId } = useDashboardParams();
-  const [add] = useIssueAdd({ dashboardId });
+  const [add, { error }] = useIssueAdd({ dashboardId });
 
   useClickAway(
     refContainer,
@@ -52,10 +54,10 @@ const IssueAdd = ({ columnId }: IssueAddProps) => {
           onSubmit={onSubmit}
         >
           {({ handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
+            <IssueAddForm onSubmit={handleSubmit}>
               <Field name="title">
                 {({ input }) => (
-                  <input
+                  <TextField
                     {...input}
                     required
                     autoFocus
@@ -63,10 +65,22 @@ const IssueAdd = ({ columnId }: IssueAddProps) => {
                 )}
               </Field>
 
-              <Button type="submit">
-                Create
-              </Button>
-            </form>
+              {error && (
+                <Box mt={2}>
+                  <Alert severity="error">{error.message}</Alert>
+                </Box>
+              )}
+
+              <IssueAddFooter>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  type="submit"
+                >
+                  Create
+                </Button>
+              </IssueAddFooter>
+            </IssueAddForm>
           )}
         </Form>
       )}

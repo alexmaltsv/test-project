@@ -60,7 +60,7 @@ const IssueDetails = ({ id }: IssueDetailsProps) => {
             <>
               <IssueDetailsField>
                 <Field name="title">
-                  {({ input }) => (
+                  {({ input, meta }) => (
                     <TextField
                       {...input}
                       fullWidth
@@ -88,7 +88,7 @@ const IssueDetails = ({ id }: IssueDetailsProps) => {
 
               <IssueDetailsField>
                 <Field name="description">
-                  {({ input, meta }) => (
+                  {({ input }) => (
                     <TextField
                       {...input}
                       fullWidth

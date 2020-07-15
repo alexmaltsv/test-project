@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { useClickAway } from 'react-use';
 import { Field, Form } from 'react-final-form';
+import { Button, Box, TextField } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { APIColumnInput } from 'api-types';
 import {
   ColumnAddFooter,
@@ -9,7 +11,6 @@ import {
 } from 'features/column/ColumnAdd.styled';
 import { useColumnAdd } from 'features/column/hooks';
 import { useDashboardParams } from 'features/dashboard/hooks';
-import { Button, TextField } from '@material-ui/core';
 
 type ColumnAddProps = {
   index: number;
@@ -17,7 +18,7 @@ type ColumnAddProps = {
 
 const ColumnAdd = ({ index }: ColumnAddProps) => {
   const { dashboardId } = useDashboardParams();
-  const [columnAdd] = useColumnAdd({ dashboardId });
+  const [columnAdd, { error }] = useColumnAdd({ dashboardId });
   const [edit, setEdit] = useState(false);
   const refContainer = useRef<HTMLDivElement>(null);
 
@@ -59,6 +60,12 @@ const ColumnAdd = ({ index }: ColumnAddProps) => {
                   />
                 )}
               </Field>
+
+              {error && (
+                <Box mt={2}>
+                  <Alert severity="error">{error.message}</Alert>
+                </Box>
+              )}
 
               <ColumnAddFooter>
                 <Button
