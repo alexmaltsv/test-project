@@ -1,7 +1,6 @@
 import { Column } from "./column.model";
-import { APIColumn, APIColumnInput, APIColumnPatchInput } from "../../graphql";
+import { APIColumnInput, APIColumnPatchInput } from "../../graphql";
 
-// TODO: Remove issues from db;
 class ColumnRepository {
   get = async (id: string) => {
     return Column.findById(id);

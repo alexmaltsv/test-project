@@ -1,7 +1,7 @@
 import { Issue } from "./issue.model";
 import { columnRepository } from "../column";
 import { addPositionToSortedArray } from "../../utils/addPositionToSortedArray";
-import { APIIssue, APIIssueAddInput, APIIssuePatchInput } from "../../graphql";
+import { APIIssueAddInput, APIIssuePatchInput } from "../../graphql";
 
 class IssueRepository {
   get = async (id: string) => {
