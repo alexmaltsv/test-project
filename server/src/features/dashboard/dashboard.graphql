@@ -1,0 +1,19 @@
+type Dashboard {
+  id: ID!
+  title: String!
+  columns: [Column!]!
+  issues: [Issue!]!
+}
+
+type Query {
+  dashboards: [Dashboard!]!
+  dashboard(id: String!): Dashboard!
+}
+
+input DashboardInput {
+  title: String!
+}
+
+type Mutation {
+  dashboardAdd(dashboard: DashboardInput!): Dashboard
+}

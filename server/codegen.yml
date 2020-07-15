@@ -1,0 +1,20 @@
+overwrite: true
+schema: "./src/**/*.graphql"
+generates:
+  src/graphql.d.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-graphql-files-modules"
+    config:
+      typesPrefix: API
+      skipTypename: true
+
+  ../client/src/api-types.d.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-graphql-files-modules"
+    config:
+      typesPrefix: API
+      skipTypename: true

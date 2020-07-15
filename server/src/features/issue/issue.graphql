@@ -1,0 +1,36 @@
+type Issue {
+  id: ID!
+  title: String!
+  description: String
+  position: Int!
+  updatedAt: String!
+  createdAt: String!
+  dashboardId: ID!
+  columnId: ID!
+}
+
+type Query {
+  issue(id: String!): Issue!
+}
+
+input IssueAddInput {
+  title: String!
+  columnId: String!
+  dashboardId: String!
+}
+
+input IssuePatchInput {
+  id: ID!
+  title: String
+  description: String
+  position: Int
+  columnId: ID
+}
+
+type Mutation {
+  issueAdd(issue: IssueAddInput!): Issue
+
+  issuePatch(issue: IssuePatchInput!): Issue
+
+  issueRemove(id: String!): DeleteResponse
+}

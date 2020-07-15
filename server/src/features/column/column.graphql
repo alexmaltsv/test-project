@@ -1,0 +1,29 @@
+type Column {
+  id: ID!
+  title: String!
+  position: Int!
+  issues: [Issue!]!
+  dashboardId: String!
+}
+
+type Query {
+  columns: [Column]
+}
+
+input ColumnInput {
+  title: String!
+  position: Int!
+  dashboardId: String!
+}
+
+input ColumnPatchInput {
+  id: ID!
+  title: String
+  position: Int
+}
+
+type Mutation {
+  columnAdd(column: ColumnInput!): Column
+  columnPatch(column: ColumnPatchInput!): Column
+  columnRemove(id: String!): DeleteResponse
+}
