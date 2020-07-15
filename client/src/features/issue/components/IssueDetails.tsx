@@ -10,13 +10,14 @@ import {
 } from '@material-ui/lab';
 import dayjs from 'dayjs';
 import { Form, Field } from 'react-final-form';
+import { useDashboardParams } from 'features/dashboard';
+import { ISSUE_DATE_FORMAT } from 'features/issue/constants';
 import {
   IssueDetailsAbout,
   IssueDetailsField,
   IssueDetailsFooter,
   IssueDetailsForm,
-} from 'features/issue/components/IssueDetails.styled';
-import { ISSUE_DATE_FORMAT } from 'features/issue/constants';
+} from './IssueDetails.styled';
 import { useIssuesFetch, useIssuesPatch } from '../hooks';
 
 type IssueDetailsProps = {
@@ -31,9 +32,10 @@ type IssueDetailsFormData = {
 
 const IssueDetails = ({ id }: IssueDetailsProps) => {
   const { data, error, loading } = useIssuesFetch(id);
+  const { dashboardId } = useDashboardParams();
   const issue = data?.issue;
 
-  const [patch, { data: patchData, error: patchError }] = useIssuesPatch();
+  const [patch, { data: patchData, error: patchError }] = useIssuesPatch({ dashboardId });
 
   const submit = (fd: IssueDetailsFormData) => {
     patch({ variables: { issue: fd } });

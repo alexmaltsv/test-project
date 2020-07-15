@@ -41,9 +41,16 @@ const ColumnAdd = ({ index }: ColumnAddProps) => {
     );
   };
 
-  if (edit) {
-    return (
-      <div ref={refContainer}>
+  return (
+    <div ref={refContainer}>
+
+      {!edit && (
+        <ColumndAddLink onClick={handleEdit}>
+          + Add column
+        </ColumndAddLink>
+      )}
+
+      {edit && (
         <Form
           initialValues={{ dashboardId, position: index }}
           onSubmit={submit}
@@ -79,15 +86,7 @@ const ColumnAdd = ({ index }: ColumnAddProps) => {
             </ColumndAddForm>
           )}
         </Form>
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <ColumndAddLink onClick={handleEdit}>
-        + Add column
-      </ColumndAddLink>
+      )}
     </div>
   );
 };

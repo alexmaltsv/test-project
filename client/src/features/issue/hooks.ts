@@ -20,8 +20,16 @@ export const useIssuesFetch = (id: string) => useQuery<IssueFetchResponse, Issue
   { variables: { id } },
 );
 
-export const useIssuesPatch = () => useMutation<IssuePatchResponse, IssuePatchInput>(
+type UseIssuesPatch = { dashboardId: string };
+export const useIssuesPatch = (
+  config?: UseIssuesPatch,
+) => useMutation<IssuePatchResponse, IssuePatchInput>(
   ISSUE_PATCH_MUTATION,
+  {
+    refetchQueries: config
+      ? [{ query: DASHBOARD_FETCH_QUERY, variables: { id: config.dashboardId } }]
+      : [],
+  },
 );
 
 type UseIssueRemoveProps = { dashboardId: string; columnId: string };

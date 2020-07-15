@@ -2,11 +2,11 @@ import React from 'react';
 import Issue, { IssueAdd } from 'features/issue';
 import { APIColumn } from 'api-types';
 import { IconButton, Typography } from '@material-ui/core';
-import { ColumnStyled, ColumnTitle } from 'features/column/Column.styled';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { ColumnStyled, ColumnTitle } from 'features/column/Column.styled';
 import { useColumnRemove } from 'features/column';
 import { useDashboardParams, DashboardDnDTypes } from 'features/dashboard';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 type ColumnProps = {
   column: APIColumn;
