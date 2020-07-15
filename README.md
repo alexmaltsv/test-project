@@ -1,6 +1,9 @@
 ## Getting started (Docker)
 
-### `docker-compose up`
+It takes a few minutes
+```
+docker-compose up
+```
 
 ## Getting started (w/o Docker)
 
